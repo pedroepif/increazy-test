@@ -14,11 +14,11 @@ class SearchController extends BaseController
       $results = [];
 
       foreach ($cepArray as $cep) {
-        $cep = preg_replace('/\D/', '', trim($cep));
+        $onlyNumber = preg_replace('/\D/', '', trim($cep));
 
-        if (strlen($cep) == 8) {
+        if (strlen($onlyNumber) == 8) {
           try {
-            $response = Http::get("https://viacep.com.br/ws/{$cep}/json/");
+            $response = Http::get("https://viacep.com.br/ws/{$onlyNumber}/json/");
 
             if ($response->successful()) {
               $json = $response->json();
@@ -38,9 +38,13 @@ class SearchController extends BaseController
             }
           } catch (Exception $error) {
             $results[] = [
-              "error" => "Falha ao consultar CEP: $cep"
+              "error" => "Falha ao consultar CEP: $onlyNumber"
             ];
           }
+        } else {
+          $results[] = [
+            "error" => "Falha ao consultar CEP: $cep"
+          ];
         }
       }
       return response()->json($results);

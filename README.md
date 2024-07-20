@@ -67,3 +67,17 @@ php -S 0.0.0.0:8000 public/index.php
 ```
 
 Agora a API já estará disponível através do endereço: http://localhost:8000/
+
+## Testes
+
+Para validar o funcionamento da API, foram criados testes para validar:
+
+- Requisições com CEPs inválidos.
+- Requisições com CEP único válido.
+- Requisições com CEPs múltiplis válidos.
+
+Os testes podem ser executados através do comando:
+
+```bash
+./vendor/bin/phpunit
+```
